@@ -1,0 +1,38 @@
+public class Book {
+    private String title;
+    private String author;
+    private boolean isCheckedOut; // true if checked out, false if available
+
+    // Constructor
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.isCheckedOut = false; // Books are available by default
+    }
+
+    // Getters and setters
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isCheckedOut() {
+        return isCheckedOut;
+    }
+
+    public void checkOut() {
+        this.isCheckedOut = true;
+    }
+
+    public void returnBook() {
+        this.isCheckedOut = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + ", Author: " + author + ", Status: " + (isCheckedOut ? "Checked Out" : "Available");
+    }
+}
