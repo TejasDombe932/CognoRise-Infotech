@@ -32,6 +32,131 @@ public class Book {
     }
 
     @Override
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class LibraryCatalog {
+    private List<Book> books;
+
+    // Constructor
+    public LibraryCatalog() {
+        books = new ArrayList<>();
+    }
+
+    // Add a book to the catalog
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    // Search for a book by title
+    public Book searchByTitle(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(title)) {
+                return book;
+            }
+        }
+        return null; // Book not found
+    }
+
+    // Search for books by author
+    public List<Book> searchByAuthor(String author) {
+        List<Book> result = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getAuthor().equalsIgnoreCase(author)) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    // Check out a book
+    public boolean checkOutBook(String title) {
+        Book book = searchByTitle(title);
+        if (book != null && !book.isCheckedOut()) {
+            book.checkOut();
+            return true;
+        }
+        return false; // Book not found or already checked out
+    }
+
+    // Return a book
+    public boolean returnBook(String title) {
+        Book book = searchByTitle(title);
+        if (book != null && book.isCheckedOut()) {
+            book.returnBook();
+            return true;
+        }
+        return false; // Book not found or not checked out
+    }
+
+    // Display all books
+    public void displayBooks() {
+        for (Book book : books) {
+            System.out.println(book);
+        }
+    }
+}
+//main
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a library catalog
+        LibraryCatalog catalog = new LibraryCatalog();
+
+        // Add books to the catalog
+        catalog.addBook(new Book("To Kill a Mockingbird", "Harper Lee"));
+        catalog.addBook(new Book("1984", "George Orwell"));
+        catalog.addBook(new Book("The Great Gatsby", "F. Scott Fitzgerald"));
+
+        // Display all books
+        System.out.println("All books in the catalog:");
+        catalog.displayBooks();
+
+        // Search for a book by title
+        System.out.println("\nSearching for '1984':");
+        Book book = catalog.searchByTitle("1984");
+        if (book != null) {
+            System.out.println(book);
+        } else {
+            System.out.println("Book not found.");
+        }
+
+        // Search for books by author
+        System.out.println("\nSearching for books by 'George Orwell':");
+        List<Book> booksByOrwell = catalog.searchByAuthor("George Orwell");
+        for (Book b : booksByOrwell) {
+            System.out.println(b);
+        }
+
+        // Check out a book
+        System.out.println("\nChecking out '1984':");
+        boolean checkedOut = catalog.checkOutBook("1984");
+        if (checkedOut) {
+            System.out.println("Book checked out successfully.");
+        } else {
+            System.out.println("Failed to check out the book.");
+        }
+
+        // Display all books after checking out
+        System.out.println("\nAll books in the catalog after checking out '1984':");
+        catalog.displayBooks();
+
+        // Return the book
+        System.out.println("\nReturning '1984':");
+        boolean returned = catalog.returnBook("1984");
+        if (returned) {
+            System.out.println("Book returned successfully.");
+        } else {
+            System.out.println("Failed to return the book.");
+        }
+
+        // Display all books after returning
+        System.out.println("\nAll books in the catalog after returning '1984':");
+        catalog.displayBooks();
+    }
+}
+
     public String toString() {
         return "Title: " + title + ", Author: " + author + ", Status: " + (isCheckedOut ? "Checked Out" : "Available");
     }
